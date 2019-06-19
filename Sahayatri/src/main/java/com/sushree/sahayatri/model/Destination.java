@@ -6,6 +6,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,6 +24,9 @@ public class Destination {
 	@Column(name="Name")
 	private String name;
 	
+	@ManyToOne
+	@JoinColumn(name = "packagesId")
+	private Package packages;
 	
 
 	public int getId() {
@@ -40,6 +45,12 @@ public class Destination {
 		this.name = name;
 	}
 
-		
-	
+	public Package getPackages() {
+		return packages;
+	}
+
+	public void setPackages(Package packages) {
+		this.packages = packages;
+	}
+
 }

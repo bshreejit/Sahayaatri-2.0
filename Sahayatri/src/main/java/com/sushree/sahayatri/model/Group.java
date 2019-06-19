@@ -8,20 +8,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/*Error*/
-
 @Entity
-@Table(name="group")
-
+@Table(name="group_table")
 public class Group {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	
 	@OneToOne
-	@JoinColumn(name="packageId")
-	private Package packages;
+	@JoinColumn(name = "userId")
+	private Package packageId;
 
 	public int getId() {
 		return id;
@@ -31,14 +29,15 @@ public class Group {
 		this.id = id;
 	}
 
-	public Package getPackages() {
-		return packages;
+	public Package getPackageId() {
+		return packageId;
 	}
 
-	public void setPackages(Package packages) {
-		this.packages = packages;
+	public void setPackageId(Package packageId) {
+		this.packageId = packageId;
 	}
+
 	
-	
+
 	
 }

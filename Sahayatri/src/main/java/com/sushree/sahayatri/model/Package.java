@@ -6,12 +6,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Table(name="Package")
+@Table(name="Packages")
 @EntityListeners(AuditingEntityListener.class)
 public class Package {
 	
@@ -36,14 +35,9 @@ public class Package {
 	private int days;
 	
 	
-	@ManyToMany
-	//Many to many case requires joining the entire table and not only just the columns
-	@JoinTable(name="packageDestination", joinColumns = {@JoinColumn(name="packageId")}, inverseJoinColumns = {@JoinColumn(name="destinationId")})
-	//joinColumns=package table column name
-	//InverseJoinColumns=destination table column name
-	private List<Destination> Destination;
-	//FetchType LAZY because it only fetches the data firing the query when necessary, so the data isn't fetched always which may full the buffer
 	
+	@OneToMany(mappedBy = "packages", fetch=FetchType.LAZY)
+	private List<Destination> destinationList;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
@@ -53,13 +47,19 @@ public class Package {
 		return id;
 	}
 
-	public List<Destination> getDestination() {
-		return Destination;
+	
+
+	public List<Destination> getDestinationList() {
+		return destinationList;
 	}
 
-	public void setDestination(List<Destination> destination) {
-		Destination = destination;
+
+
+	public void setDestinationList(List<Destination> destinationList) {
+		this.destinationList = destinationList;
 	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
